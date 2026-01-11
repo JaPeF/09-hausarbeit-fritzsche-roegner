@@ -3,17 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}OpenLib{% endblock %}</title>
+    
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: beige;
+            margin: 0;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            height: 24px;
+            justify-content: center;
+        }
+    </style>
+
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
 
     <!-- Navigation -->
-    <nav>
-        <a href="{% url 'home' %}">Startseite</a> |
-        <a href="{% url 'book_list' %}">Buecher</a> |
-        <a href="{% url 'author_list' %}">Autoren</a> |
-        <a href="{% url 'publisher_list' %}">Verlage</a> |
-        <a href="{% url 'review_list' %}">Rezensionen</a>
-    </nav>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">Startseite</a> |
+            <a href="{% url 'book_list' %}">Buecher</a> |
+            <a href="{% url 'author_list' %}">Autoren</a> |
+            <a href="{% url 'publisher_list' %}">Verlage</a> |
+            <a href="{% url 'review_list' %}">Rezensionen</a>
+         </nav>
+    </header>
+    
 
     <hr>
 
