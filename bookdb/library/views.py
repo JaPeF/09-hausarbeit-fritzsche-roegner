@@ -1,14 +1,16 @@
 from django.shortcuts import render, HttpResponse
 from django.views.generic import TemplateView
-from .models import BookItem
+from .models import BookItem, Author, Publisher, Review
 from django.views.generic import (ListView,DetailView,CreateView,UpdateView,DeleteView)
 from django.urls import reverse_lazy
-from .forms import BookItemForm
+from .forms import BookItemForm, AuthorForm, PublisherForm, ReviewForm
 
 # Create your views here.
 
 def home(request):
     return render(request, "library/home.html")
+# -------------
+# Book CRUD
 
 class BookListView(ListView):
     model = BookItem
@@ -36,13 +38,90 @@ class BookDeleteView(DeleteView):
     model = BookItem
     template_name = "library/book/book_confirm_delete.html"
     success_url = reverse_lazy("book_list")
+# -------------
+# Author CRUD
 
+class AuthorListView(ListView):
+    model = Author
+    template_name = "library/author/author_list.html"
+    context_object_name = "authors"
 
-def author_list(request):
-    return render(request, "library/author/author_list.html")
+class AuthorDetailView(DetailView):
+    model = Author
+    template_name = "library/author/author_detail.html"
+    context_object_name = "author"
 
-def publisher_list(request):
-    return render(request, "library/publisher/publisher.html")
+class AuthorCreateView(CreateView):
+    model = Author
+    form_class = AuthorForm
+    template_name = "library/author/author_form.html"
+    success_url = reverse_lazy("author_list")
 
-def review_list(request):
-    return render(request, "library/reviews/review.html")
+class AuthorUpdateView(UpdateView):
+    model = Author
+    form_class = AuthorForm
+    template_name = "library/author/author_form.html"
+    success_url = reverse_lazy("author_list")
+
+class AuthorDeleteView(DeleteView):
+    model = Author
+    template_name = "library/author/author_confirm_delete.html"
+    success_url = reverse_lazy("author_list")
+# -------------
+# Publisher CRUD
+
+class PublisherListView(ListView):
+    model = Publisher
+    template_name = "library/publisher/publisher_list.html"
+    context_object_name = "publishers"
+
+class PublisherDetailView(DetailView):
+    model = Publisher
+    template_name = "library/publisher/publisher_detail.html"
+    context_object_name = "publisher"
+
+class PublisherCreateView(CreateView):
+    model = Publisher
+    form_class = PublisherForm
+    template_name = "library/publisher/publisher_form.html"
+    success_url = reverse_lazy("publisher_list")
+
+class PublisherUpdateView(UpdateView):
+    model = Publisher
+    form_class = PublisherForm
+    template_name = "library/publisher/publisher_form.html"
+    success_url = reverse_lazy("publisher_list")
+
+class PublisherDeleteView(DeleteView):
+    model = Publisher
+    template_name = "library/publisher/publisher_confirm_delete.html"
+    success_url = reverse_lazy("publisher_list")
+# -------------
+# Review CRUD
+
+class ReviewListView(ListView):
+    model = Review
+    template_name = "library/reviews/review_list.html"
+    context_object_name = "reviews"
+
+class ReviewDetailView(DetailView):
+    model = Review
+    template_name = "library/reviews/review_detail.html"
+    context_object_name = "review"
+
+class ReviewCreateView(CreateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = "library/reviews/review_form.html"
+    success_url = reverse_lazy("review_list")
+
+class ReviewUpdateView(UpdateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = "library/reviews/review_form.html"
+    success_url = reverse_lazy("review_list")
+
+class ReviewDeleteView(DeleteView):
+    model = Review
+    template_name = "library/reviews/review_confirm_delete.html"
+    success_url = reverse_lazy("review_list")
