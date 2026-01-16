@@ -28,7 +28,7 @@
     <header>
         <nav>
             <a href="{% url 'home' %}">Startseite</a> |
-            <a href="{% url 'book_list' %}">Buecher</a> |
+            <a href="{% url 'book_list' %}">Bücher</a> |
             <a href="{% url 'author_list' %}">Autoren</a> |
             <a href="{% url 'publisher_list' %}">Verlage</a> |
             <a href="{% url 'review_list' %}">Rezensionen</a>
@@ -42,10 +42,10 @@
     <main>
         {% block content %}
         <h1>Willkommen in der OpenLib</h1>
-        <p>Deine Datenbank fuer Buecher, Autoren und Verlage.</p>
+        <p>Deine Datenbank fuer Bücher, Autoren und Verlage.</p>
 
         <p>0</p>
-        <p>Buecher</p>
+        <p>Bücher</p>
 
         <p>0</p>
         <p>Autoren</p>
@@ -56,7 +56,7 @@
         <h2>Schnellzugriff</h2>
 
         <p>
-            <a href="{% url 'book_list' %}">Alle Buecher ansehen</a> |
+            <a href="{% url 'book_list' %}">Alle Bücher ansehen</a> |
             <a href="{% url 'author_list' %}">Alle Autoren ansehen</a>
         </p>
         {% endblock %}
