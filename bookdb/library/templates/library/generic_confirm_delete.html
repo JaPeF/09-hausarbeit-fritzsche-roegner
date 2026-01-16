@@ -1,0 +1,15 @@
+{% extends "library/base.html" %}
+
+{% block title %}Loeschen{% endblock %}
+
+{% block content %}
+<h1>Eintrag loeschen</h1>
+
+<p>Willst du "{{ object }}" wirklich loeschen?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Ja, loeschen</button>
+    <a href="javascript:history.back()">Abbrechen</a>
+</form>
+{% endblock %}

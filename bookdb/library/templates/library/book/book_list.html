@@ -1,68 +1,21 @@
 {% extends "library/base.html" %}
 
-{% block extra_head %}
-  <style>
-    button{
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-      justify-content: center;
-      background-color: black;
-      color: white;
-      font-size: 18px;
-      position: absolute;
-      right: 16px;
-      bottom: 16px;
-      border: unset;
-      
-  }
-
-    .list-item {
-      background-color: white;
-      height: 60px;
-      padding-left: 20px;
-      display: flex;
-      align-items: center;
-  }
-  </style>
-{% endblock %}
-
 {% block content %}
-  <h1>Willkommen zur Buchliste</h1>
-  <p>Hier sind alle Bücher aufgelistet</p>
-  <p>Hier kann man Bücher Erstellen, Anzeigen, Aktualisieren und Löschen.</p>
-
+  <h1>Willkommen zur Bücherliste</h1>
   <p>
-    <h2> Bücher Liste </h2>
-
-  
-
-    {% for row in all_items %}
-      <div class="list-item">
-        <input type="checkbox"> {{ row.Titel }}
-      </div>
-    {% endfor %}
-
-    <button onclick='addItem()'>
-      +
-    </button>
-
-    
-
-    <script>
-      function addItem() {
-        let itemName = prompt('Neues Buch hinzufügen');
-        let token = '{{ csrf_token }}';
-        let formData = new FormData();
-        formData.append('itemName', itemName);
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-
-        fetch('/books/', {
-          method: 'POST',
-          body: formData
-        });
-        window.location.reload();
-      }
-    </script>
+    Hier kannst du ein neues Buch erstellen:
+    <a href="{% url 'book_create' %}">Erstellen</a>
   </p>
+  <ul>
+  <ul>
+    {% for b in all_items %}
+      <li>
+        <a href="{% url 'book_detail' b.pk %}">{{ b.Titel }}</a>
+        - <a href="{% url 'book_update' b.pk %}">Bearbeiten</a>
+        - <a href="{% url 'book_delete' b.pk %}">Löschen</a>
+      </li>
+    {% empty %}
+      <li>Noch keine Bücher vorhanden.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}

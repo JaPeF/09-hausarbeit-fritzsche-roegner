@@ -3,4 +3,20 @@
 {% block content %}
   <h1>Willkommen zur Autorenliste</h1>
   <p>Hier sind alle Autoren aufgelistet</p>
+  <p>
+    Hier kannst du einen Autor hinzufügen:
+    <a href="{% url 'author_create' %}">Hinzufügen</a>
+  </p>
+  <ul>
+  <ul>
+    {% for b in all_items %}
+      <li>
+        <a href="{% url 'book_detail' b.pk %}">{{ b.Titel }}</a>
+        - <a href="{% url 'book_update' b.pk %}">Bearbeiten</a>
+        - <a href="{% url 'book_delete' b.pk %}">Löschen</a>
+      </li>
+    {% empty %}
+      <li>Noch keine Buecher vorhanden.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}

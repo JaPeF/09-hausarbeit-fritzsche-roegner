@@ -1,0 +1,15 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+  <h1>{{ object.Titel }}</h1>
+
+  <p><strong>Veroeffentlichungsdatum:</strong> {{ object.Veröffentlichungsdatum }}</p>
+  <p><strong>Genre:</strong> {{ object.Genre }}</p>
+  <p><strong>Beschreibung:</strong> {{ object.Beschreibung }}</p>
+
+  <p>
+    <a href="{% url 'book_update' object.pk %}">Bearbeiten</a> |
+    <a href="{% url 'book_delete' object.pk %}">Loeschen</a> |
+    <a href="{% url 'book_list' %}">Zurueck zur Liste</a>
+  </p>
+{% endblock %}
