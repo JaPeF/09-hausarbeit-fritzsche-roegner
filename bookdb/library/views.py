@@ -4,6 +4,7 @@ from .models import BookItem, Author, Publisher, Review
 from django.views.generic import (ListView,DetailView,CreateView,UpdateView,DeleteView)
 from django.urls import reverse_lazy
 from .forms import BookItemForm, AuthorForm, PublisherForm, ReviewForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -16,6 +17,23 @@ class BookListView(ListView):
     model = BookItem
     template_name = "library/book/book_list.html"
     context_object_name = "all_items"
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get("q")
+        
+        if search_query:
+            keywords = search_query.split()
+            q_objects = Q()
+            
+            for word in keywords:
+                q_objects |= Q(Titel__icontains=word)
+                q_objects |= Q(Author__icontains=word)
+                q_objects |= Q(Genre__icontains=word)
+            
+            queryset = queryset.filter(q_objects).distinct()
+            
+        return queryset
 
 class BookDetailView(DetailView):
     model = BookItem
@@ -124,3 +142,18 @@ class ReviewDeleteView(DeleteView):
     model = Review
     template_name = "library/generic_confirm_delete.html"
     success_url = reverse_lazy("review_list")
+    
+# -------------
+# Suchleiste
+def book_list(request):
+    query = request.GET.get("q")
+    print("QUERY:", query)
+    books = BookItem.objects.all()
+    
+    if query:
+        books = books.filter(Titel__icontains=query)
+        
+    return render(request, "library/book/book_list.html", {
+                  "all_items": books,
+                  "query": query,
+                  })

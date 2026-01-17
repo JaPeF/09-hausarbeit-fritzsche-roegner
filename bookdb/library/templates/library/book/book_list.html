@@ -6,6 +6,18 @@
     Hier kannst du ein neues Buch erstellen:
     <a href="{% url 'book_create' %}">Erstellen</a>
   </p>
+
+  <!--Suchleiste-->
+  <form method="get" action="{% url 'book_list' %}">
+    <input
+      type="text"
+      name="q"
+      placeholder="Nach Titel, Author oder Genre suchen..."
+      value="{{ request.GET.q }}"
+    >
+    <button type="submit">Suchen</button>
+  </form>
+
   <ul>
   <ul>
     {% for b in all_items %}
