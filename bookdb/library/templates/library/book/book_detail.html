@@ -3,8 +3,10 @@
 {% block content %}
   <h1>{{ object.Titel }}</h1>
 
+  <p><strong>Autor:</strong> <a href="{% url 'author_detail' object.Author.pk %}">{{ object.Author }}</a></p>
   <p><strong>Veröffentlichungsdatum:</strong> {{ object.Veröffentlichungsdatum }}</p>
   <p><strong>Genre:</strong> {{ object.Genre }}</p>
+  <p><strong>Verlag:</strong> <a href="{% url 'publisher_detail' object.Author.pk %}">{{ object.Publisher }}</a></p>
   <p><strong>Beschreibung:</strong> {{ object.Beschreibung }}</p>
 
   <p>
