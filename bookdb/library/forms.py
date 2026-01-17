@@ -4,7 +4,7 @@ from .models import BookItem, Author, Publisher, Review
 class BookItemForm(forms.ModelForm):
     class Meta:
         model = BookItem
-        fields = ["Titel", "Veröffentlichungsdatum", "Genre", "Beschreibung"]
+        fields = ["Titel", "Author", "Veröffentlichungsdatum", "Genre", "Beschreibung"]
 
 class AuthorForm(forms.ModelForm):
     class Meta:

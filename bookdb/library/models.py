@@ -22,7 +22,11 @@ class Publisher(models.Model):
 
 class BookItem(models.Model):
     Titel = models.CharField(max_length=200)
-    Author = models.CharField(max_length=200, default="Unbekannt")
+    Author = models.ForeignKey(
+        Author,
+        on_delete=models.CASCADE,
+        related_name="books"
+    )
     Veröffentlichungsdatum = models.DateField(default=date.today)
     Genre = models.CharField(max_length=100, blank=True)
     Beschreibung = models.TextField(blank=True)

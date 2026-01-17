@@ -17,4 +17,13 @@ Formular - OpenLib
     <button type="submit">Speichern</button>
     <a href="javascript:history.back()">Abbrechen</a>
 </form>
+
+<script>
+    $(document).ready(function(){
+        $('#id_Author').select2({
+            placeholder: "Autor suchen...",
+            allowClear: true
+        });
+    });
+</script>
 {% endblock %}
