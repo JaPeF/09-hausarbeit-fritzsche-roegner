@@ -8,18 +8,17 @@
   </p>
 
   <!--Suchleiste-->
-  <form method="get">
+  <form method="get" action="{% url 'book_list' %}">
     <input
       type="text"
       name="q"
-      placeholder="Suchen..."
-      value="{{ query|default:''}}"
+      placeholder="Nach Titel, Author oder Genre suchen..."
+      value="{{ request.GET.q }}"
     >
     <button type="submit">Suchen</button>
-  </form> 
+  </form>
 
-
-
+  <ul>
   <ul>
     {% for b in all_items %}
       <li>

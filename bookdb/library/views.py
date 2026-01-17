@@ -4,6 +4,7 @@ from .models import BookItem, Author, Publisher, Review
 from django.views.generic import (ListView,DetailView,CreateView,UpdateView,DeleteView)
 from django.urls import reverse_lazy
 from .forms import BookItemForm, AuthorForm, PublisherForm, ReviewForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -19,9 +20,19 @@ class BookListView(ListView):
     
     def get_queryset(self):
         queryset = super().get_queryset()
-        query = self.request.GET.get("q")
-        if query:
-            queryset = queryset.filter(Titel__icontains=query)
+        search_query = self.request.GET.get("q")
+        
+        if search_query:
+            keywords = search_query.split()
+            q_objects = Q()
+            
+            for word in keywords:
+                q_objects |= Q(Titel__icontains=word)
+                q_objects |= Q(Author__icontains=word)
+                q_objects |= Q(Genre__icontains=word)
+            
+            queryset = queryset.filter(q_objects).distinct()
+            
         return queryset
 
 class BookDetailView(DetailView):
