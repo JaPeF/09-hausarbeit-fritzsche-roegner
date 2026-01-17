@@ -16,6 +16,13 @@ class BookListView(ListView):
     model = BookItem
     template_name = "library/book/book_list.html"
     context_object_name = "all_items"
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get("q")
+        if query:
+            queryset = queryset.filter(Titel__icontains=query)
+        return queryset
 
 class BookDetailView(DetailView):
     model = BookItem
@@ -124,3 +131,18 @@ class ReviewDeleteView(DeleteView):
     model = Review
     template_name = "library/generic_confirm_delete.html"
     success_url = reverse_lazy("review_list")
+    
+# -------------
+# Suchleiste
+def book_list(request):
+    query = request.GET.get("q")
+    print("QUERY:", query)
+    books = BookItem.objects.all()
+    
+    if query:
+        books = books.filter(Titel__icontains=query)
+        
+    return render(request, "library/book/book_list.html", {
+                  "all_items": books,
+                  "query": query,
+                  })

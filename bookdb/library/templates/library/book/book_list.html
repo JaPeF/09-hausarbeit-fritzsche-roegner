@@ -6,7 +6,20 @@
     Hier kannst du ein neues Buch erstellen:
     <a href="{% url 'book_create' %}">Erstellen</a>
   </p>
-  <ul>
+
+  <!--Suchleiste-->
+  <form method="get">
+    <input
+      type="text"
+      name="q"
+      placeholder="Suchen..."
+      value="{{ query|default:''}}"
+    >
+    <button type="submit">Suchen</button>
+  </form> 
+
+
+
   <ul>
     {% for b in all_items %}
       <li>
