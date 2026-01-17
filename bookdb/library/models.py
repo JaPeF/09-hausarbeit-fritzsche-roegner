@@ -18,7 +18,7 @@ class Publisher(models.Model):
     Beschreibung = models.TextField(blank=True)
 
     def __str__(self):
-        return self.name
+        return self.Name
 
 class BookItem(models.Model):
     Titel = models.CharField(max_length=200)

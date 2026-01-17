@@ -20,8 +20,16 @@ Formular - OpenLib
 
 <script>
     $(document).ready(function(){
+
+    <!--Autor Dropdown mit Suche-->
         $('#id_Author').select2({
             placeholder: "Autor suchen...",
+            allowClear: true
+        });
+
+    <!--Publisher Dropdown mit Suche-->
+        $('#id_Publisher').select2({
+            placeholder: "Verlag suchen...",
             allowClear: true
         });
     });
