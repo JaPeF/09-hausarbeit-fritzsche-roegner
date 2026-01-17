@@ -28,7 +28,8 @@ class BookListView(ListView):
             
             for word in keywords:
                 q_objects |= Q(Titel__icontains=word)
-                q_objects |= Q(Author__icontains=word)
+                q_objects |= Q(Author__Vorname__icontains=word)
+                q_objects |= Q(Author__Nachname__icontains=word)
                 q_objects |= Q(Genre__icontains=word)
             
             queryset = queryset.filter(q_objects).distinct()
@@ -67,6 +68,11 @@ class AuthorDetailView(DetailView):
     model = Author
     template_name = "library/author/author_detail.html"
     context_object_name = "author"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['books'] = BookItem.objects.filter(Author=self.object)
+        return context
 
 class AuthorCreateView(CreateView):
     model = Author

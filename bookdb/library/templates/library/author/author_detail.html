@@ -8,6 +8,16 @@
   <p><strong>Geburtsdatum:</strong> {{ object.Geburtsdatum }}</p>
   <p><strong>Biografie:</strong> {{ object.Biografie }}</p>
 
+  <h3>Bücher von diesem Autor</h3>
+  <ul>
+    {% for book in books %}
+      <li>
+        <a href="{% url 'book_detail' book.pk %}">{{ book.Titel }}</a>
+      </li>
+    {% empty %}
+      <li>Keine Bücher vorhanden</li>
+    {% endfor %}
+    </ul>
   <p>
     <a href="{% url 'author_update' object.pk %}">Bearbeiten</a> |
     <a href="{% url 'author_delete' object.pk %}">Löschen</a> |
