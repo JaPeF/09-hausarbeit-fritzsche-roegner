@@ -1,15 +1,15 @@
 {% extends "library/base.html" %}
 
-{% block title %}Loeschen{% endblock %}
+{% block title %}Löschen{% endblock %}
 
 {% block content %}
-<h1>Eintrag loeschen</h1>
+<h1>Eintrag löschen</h1>
 
-<p>Willst du "{{ object }}" wirklich loeschen?</p>
+<p>Willst du "{{ object }}" wirklich löschen?</p>
 
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Ja, loeschen</button>
+    <button type="submit">Ja, löschen</button>
     <a href="javascript:history.back()">Abbrechen</a>
 </form>
 {% endblock %}

@@ -43,11 +43,11 @@ class BookDeleteView(DeleteView):
 class AuthorListView(ListView):
     model = Author
     template_name = "library/author/author_list.html"
-    context_object_name = "authors"
+    context_object_name = "author"
 
 class AuthorDetailView(DetailView):
     model = Author
-    template_name = "library/generic_detail.html"
+    template_name = "library/author/author_detail.html"
     context_object_name = "author"
 
 class AuthorCreateView(CreateView):

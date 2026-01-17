@@ -9,7 +9,7 @@ class Author(models.Model):
     Biografie = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.Vorname} {self.Nachname}"
     
 class Publisher(models.Model):
     Name = models.CharField(max_length=200)

@@ -1,0 +1,16 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+  <h1>{{ object.Vorname }}{{ object.Nachname }}</h1>
+
+  <p><strong>Vorname:</strong> {{ object.Vorname }}</p>
+  <p><strong>Nachname:</strong> {{ object.Nachname }}</p>
+  <p><strong>Geburtsdatum:</strong> {{ object.Geburtsdatum }}</p>
+  <p><strong>Biografie:</strong> {{ object.Biografie }}</p>
+
+  <p>
+    <a href="{% url 'author_update' object.pk %}">Bearbeiten</a> |
+    <a href="{% url 'author_delete' object.pk %}">Löschen</a> |
+    <a href="{% url 'author_list' %}">Zurück zur Liste</a>
+  </p>
+{% endblock %}

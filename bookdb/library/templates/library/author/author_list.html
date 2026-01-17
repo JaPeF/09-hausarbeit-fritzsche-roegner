@@ -9,14 +9,14 @@
   </p>
   <ul>
   <ul>
-    {% for b in all_items %}
+    {% for author in author %}
       <li>
-        <a href="{% url 'book_detail' b.pk %}">{{ b.Titel }}</a>
-        - <a href="{% url 'book_update' b.pk %}">Bearbeiten</a>
-        - <a href="{% url 'book_delete' b.pk %}">Löschen</a>
+        <a href="{% url 'author_detail' author.pk %}">{{ author.Vorname }} {{ author.Nachname }}</a>
+        - <a href="{% url 'author_update' author.pk %}">Bearbeiten</a>
+        - <a href="{% url 'author_delete' author.pk %}">Löschen</a>
       </li>
     {% empty %}
-      <li>Noch keine Buecher vorhanden.</li>
+      <li>Es gibt noch keine Autoren.</li>
     {% endfor %}
   </ul>
 {% endblock %}
