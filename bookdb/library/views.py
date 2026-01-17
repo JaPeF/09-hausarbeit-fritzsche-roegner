@@ -107,7 +107,7 @@ class PublisherListView(ListView):
 
 class PublisherDetailView(DetailView):
     model = Publisher
-    template_name = "library/generic_detail.html"
+    template_name = "library/publisher/publisher_detail.html"
     context_object_name = "publisher"
 
 class PublisherCreateView(CreateView):

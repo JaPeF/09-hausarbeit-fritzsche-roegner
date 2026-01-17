@@ -1,0 +1,31 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+  <h1>Verlag: {{ publisher.Name }}</h1>
+
+  <p>
+    <strong>Gründungsjahr:</strong> {{ publisher.Gründungsjahr }}<br>
+    <strong>Sitz:</strong> {{ publisher.Sitz }}
+  </p> 
+
+  
+
+  <h2>Veröffentlichte Bücher</h2>
+
+  <ul>
+    {% for book in publisher.bookitem_set.all %}
+      <li>
+        <a href="{% url 'book_detail' book.pk %}">{{ book.Titel }}</a>
+        - Autor: {{ book.Author }}
+      </li>
+    {% empty %}
+      <li>Dieser Verlag hat noch keine Bücher veröffentlicht.</li>
+    {% endfor %}
+  </ul>
+
+  <p>
+    <a href="{% url 'publisher_update' publisher.pk %}">Bearbeiten</a> |
+    <a href="{% url 'publisher_delete' publisher.pk %}">Löschen</a>
+  </p>
+
+{% endblock %}
