@@ -3,4 +3,27 @@
 {% block content %}
   <h1>Willkommen zur Verlagsliste</h1>
   <p>Hier sind alle Verläge aufgelistet</p>
+
+  <p>
+    Hier kannst du einen neuen Verlag anlegen:
+    <a href="{% url 'publisher_create' %}">Erstellen</a>
+  </p>
+
+  <!--Suchleiste-->
+  <form method="get" action="{% url 'publisher_list' %}">
+    <input type="text" name="q" placeholder="Nach Verlag suchen..." value="{{ request.GET.q }}">
+    <button type="submit">Suchen</button>
+  </form>
+
+  <ul>
+    {% for p in publishers %}
+      <li>
+        <a href="{% url 'publisher_detail' p.pk %}">{{ p.Name }}</a>
+        - <a href="{% url 'publisher_update' p.pk %}">Bearbeiten</a>
+        - <a href="{% url 'publisher_delete' p.pk %}">Löschen</a>
+      </li>
+    {% empty %}
+      <li>Noch keine Verlage vorhanden.</li>
+    {% endfor %}
+    </ul>
 {% endblock %}

@@ -97,6 +97,13 @@ class PublisherListView(ListView):
     model = Publisher
     template_name = "library/publisher/publisher_list.html"
     context_object_name = "publishers"
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get("q")
+        if search_query:
+            queryset = queryset.filter(Name__icontains=search_query)
+        return queryset
 
 class PublisherDetailView(DetailView):
     model = Publisher
