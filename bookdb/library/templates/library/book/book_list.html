@@ -31,7 +31,7 @@
     <option value="">Alle Verlage</option>
     {% for p in publishers %}
       <option value="{{ p.id }}" {% if request.GET.publisher == p.id|stringformat:"s" %}selected{% endif %}>
-        {{ p.name }}
+        {{ p.Name }}
       </option>
     {% endfor %}
     </select>
