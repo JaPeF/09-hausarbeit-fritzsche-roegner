@@ -8,10 +8,24 @@
   <p><strong>Genre:</strong> {{ object.Genre }}</p>
   <p><strong>Verlag:</strong> <a href="{% url 'publisher_detail' object.Author.pk %}">{{ object.Publisher }}</a></p>
   <p><strong>Beschreibung:</strong> {{ object.Beschreibung }}</p>
+  <h2>Rezensionen</h2>
+  <ul>
+    {% for review in object.reviews.all %}
+      <li>
+        <strong>{{ review.Rezensent }}</strong>
+        ({{ review.Bewertung }}/10) - {{ review.Datum }}<br>
+        <a href="{% url 'review_detail' review.pk %}">Ausführungen</a> |
+        <a href="{% url 'review_update' review.pk %}">Bearbeiten</a> |
+        <a href="{% url 'review_delete' review.pk %}">Löschen</a>
+      </li>
+    {% empty %}
+      <li>Es gibt noch keine Rezensionen für dieses Buch.</li>
+    {% endfor %}
+  </ul>
 
   <p>
     <a href="{% url 'book_update' object.pk %}">Bearbeiten</a> |
-    <a href="{% url 'book_delete' object.pk %}">Löschen</a> |
-    <a href="{% url 'book_list' %}">Zurück zur Liste</a>
+    <a href="{% url 'book_delete' object.pk %}">Buch löschen</a> |
+    <a href="{% url 'book_list' %}">Zurück zur Bücherliste</a>
   </p>
 {% endblock %}

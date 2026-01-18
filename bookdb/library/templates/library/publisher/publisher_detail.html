@@ -25,7 +25,8 @@
 
   <p>
     <a href="{% url 'publisher_update' publisher.pk %}">Bearbeiten</a> |
-    <a href="{% url 'publisher_delete' publisher.pk %}">Löschen</a>
+    <a href="{% url 'publisher_delete' publisher.pk %}">Verlag löschen</a> |
+    <a href="{% url 'publisher_list' %}">Zurück zu den Verlägen</a>
   </p>
 
 {% endblock %}
