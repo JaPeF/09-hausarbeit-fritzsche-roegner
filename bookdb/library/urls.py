@@ -30,4 +30,9 @@ urlpatterns = [
     path("reviews/<int:pk>/", views.ReviewDetailView.as_view(), name="review_detail"),
     path("reviews/<int:pk>/edit/", views.ReviewUpdateView.as_view(), name="review_update"),
     path("reviews/<int:pk>/delete/", views.ReviewDeleteView.as_view(), name="review_delete"),
+    # Favoriten/Besten-Liste
+    path("favorites/", views.favorites_list, name="favorites_list"),
+    path("favorites/add/", views.favorites_add, name="favorites_add"),
+    path("favorites/toggle/<int:pk>/", views.favorites_toggle, name="favorites_toggle"),
+    path("favorites/remove/<int:pk>/", views.favorites_remove, name="favorites_remove"),
 ]

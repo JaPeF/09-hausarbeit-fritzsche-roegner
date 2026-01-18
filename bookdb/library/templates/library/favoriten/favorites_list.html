@@ -1,0 +1,20 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+  <h1>Favoriten</h1>
+
+  <p>
+    Buch zu Favoriten hinzufügen:<a href="{% url 'favorites_add' %}"> Auswahl</a>
+  </p>
+
+  <ul>
+    {% for fav in favorites %}
+      <li>
+        <a href="{% url 'book_detail' fav.Buch.pk %}">{{ fav.Buch.Titel }}</a>
+        - <a href="{% url 'favorites_remove' fav.Buch.pk %}">Entfernen</a>
+      </li>
+    {% empty %}
+      <li>Noch keine Favoriten vorhanden.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
