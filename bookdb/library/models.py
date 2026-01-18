@@ -41,3 +41,15 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.Buch} - {self.Bewertung}/10"
+    
+class FavoriteEntry(models.Model):
+    Buch = models.ForeignKey(BookItem, on_delete=models.CASCADE, related_name="favorite_entries")
+    AngelegtAm = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["Buch"], name="unique_favorite_book")
+        ]
+
+    def __str__(self):
+        return f"Favorit: {self.Buch}"

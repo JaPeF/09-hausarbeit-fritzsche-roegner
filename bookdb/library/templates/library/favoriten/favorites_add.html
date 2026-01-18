@@ -1,0 +1,24 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+  <h1>Buch zu Favoriten hinzufügen</h1>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <label for="book_id">Buch auswählen:</label>
+    <select name="book_id" id="book_id" required>
+      <option value="">Bitte wählen...</option>
+      {% for b in books %}
+        <option value="{{ b.pk }}">{{ b.Titel }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Hinzufügen</button>
+    <a href="{% url 'favorites_list' %}">Abbrechen</a>
+  </form>
+
+  <p>
+    Hinweis: Es werden nur Bücher angezeigt, die noch nicht in den Favoriten sind.
+  </p>
+{% endblock %}

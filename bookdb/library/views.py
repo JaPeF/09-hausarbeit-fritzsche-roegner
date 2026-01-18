@@ -5,6 +5,8 @@ from django.views.generic import (ListView,DetailView,CreateView,UpdateView,Dele
 from django.urls import reverse_lazy
 from .forms import BookItemForm, AuthorForm, PublisherForm, ReviewForm
 from django.db.models import Q, Avg
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import BookItem, FavoriteEntry
 
 # Create your views here.
 
@@ -177,9 +179,9 @@ class ReviewDeleteView(DeleteView):
     model = Review
     template_name = "library/generic_confirm_delete.html"
     success_url = reverse_lazy("review_list")
-    
 # -------------
 # Suchleiste
+
 def book_list(request):
     query = request.GET.get("q")
     print("QUERY:", query)
@@ -192,3 +194,42 @@ def book_list(request):
                   "all_items": books,
                   "query": query,
                   })
+# -------------
+# Favoritenliste
+
+def favorites_list(request):
+    favorites = FavoriteEntry.objects.select_related("Buch").order_by("-AngelegtAm")
+    return render(request, "library/favoriten/favorites_list.html", {"favorites": favorites})
+
+
+def favorites_add(request):
+    # Alle Bücher anzeigen, aber nur die, die noch nicht Favorit sind
+    favorite_book_ids = FavoriteEntry.objects.values_list("Buch_id", flat=True)
+    books = BookItem.objects.exclude(pk__in=favorite_book_ids).order_by("Titel")
+
+    if request.method == "POST":
+        book_id = request.POST.get("book_id")
+        if book_id:
+            book = get_object_or_404(BookItem, pk=book_id)
+            FavoriteEntry.objects.get_or_create(Buch=book)
+            return redirect("favorites_list")
+
+    return render(request, "library/favoriten/favorites_add.html", {"books": books})
+
+
+def favorites_remove(request, pk):
+    # pk ist Buch-ID
+    FavoriteEntry.objects.filter(Buch_id=pk).delete()
+    return redirect(request.META.get("HTTP_REFERER", "favorites_list"))
+
+
+def favorites_toggle(request, pk):
+    # pk ist Buch-ID
+    book = get_object_or_404(BookItem, pk=pk)
+    fav = FavoriteEntry.objects.filter(Buch=book).first()
+    if fav:
+        fav.delete()
+    else:
+        FavoriteEntry.objects.create(Buch=book)
+
+    return redirect(request.META.get("HTTP_REFERER", "favorites_list"))
