@@ -16,7 +16,40 @@
       value="{{ request.GET.q }}"
     >
     <button type="submit">Suchen</button>
+
+    <!--Dropdown Filter-->
+  <select name="genre">
+    <option value="">Alle Genres</option>
+    {% for g in genres %}
+      <option value="{{ g }}" {% if request.GET.genre == g %}selected{% endif %}>
+        {{ g }}
+      </option>
+    {% endfor %}
+    </select>
+
+    <select name="publisher">
+    <option value="">Alle Verlage</option>
+    {% for p in publishers %}
+      <option value="{{ p.id }}" {% if request.GET.publisher == p.id|stringformat:"s" %}selected{% endif %}>
+        {{ p.name }}
+      </option>
+    {% endfor %}
+    </select>
+
+    <select name="author">
+    <option value="">Alle Autoren</option>
+    {% for a in authors %}
+      <option value="{{ a.id }}" {% if request.GET.author|default:"" == a.id|stringformat:"s" %}selected{% endif %}>
+        {{ a.Vorname }} {{ a.Nachname }}
+      </option>
+    {% endfor %}
+    </select>
+
+
+    <button type="submit">Filter anwenden</button>
   </form>
+
+  
 
   <ul>
     {% for b in all_items %}

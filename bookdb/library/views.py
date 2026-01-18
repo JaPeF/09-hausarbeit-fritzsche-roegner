@@ -4,7 +4,7 @@ from .models import BookItem, Author, Publisher, Review
 from django.views.generic import (ListView,DetailView,CreateView,UpdateView,DeleteView)
 from django.urls import reverse_lazy
 from .forms import BookItemForm, AuthorForm, PublisherForm, ReviewForm
-from django.db.models import Q
+from django.db.models import Q, Avg
 
 # Create your views here.
 
@@ -20,21 +20,43 @@ class BookListView(ListView):
     
     def get_queryset(self):
         queryset = super().get_queryset()
-        search_query = self.request.GET.get("q")
         
-        if search_query:
-            keywords = search_query.split()
-            q_objects = Q()
+        q = self.request.GET.get("q")
+        genre = self.request.GET.get("genre")
+        publisher = self.request.GET.get("publisher")
+        ratings = self.request.GET.get("rating")
+        author = self.request.GET.get("author")
+        
+        if q:
+            queryset = queryset.filter(
+                Q(Titel__icontains=q) |
+                Q(Author__Vorname__icontains=q) |
+                Q(Author__Nachname__icontains=q) |
+                Q(Genre__icontains=q)
+            )
+        
+        if genre:
+            queryset = queryset.filter(Genre=genre)
             
-            for word in keywords:
-                q_objects |= Q(Titel__icontains=word)
-                q_objects |= Q(Author__Vorname__icontains=word)
-                q_objects |= Q(Author__Nachname__icontains=word)
-                q_objects |= Q(Genre__icontains=word)
+        if publisher:
+            queryset = queryset.filter(Publisher_id=publisher)
+        
+        if ratings:
+            queryset = queryset.filter(avg_rating__gte=min(ratings))
             
-            queryset = queryset.filter(q_objects).distinct()
-            
-        return queryset
+        if author:
+            queryset = queryset.filter(Author_id=author)
+        
+        return queryset.distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context["genres"] = (BookItem.objects.values_list("Genre", flat=True).exclude(Genre="").distinct())
+        context["publishers"] = Publisher.objects.all()
+        context["authors"] = Author.objects.all()
+        
+        return context
 
 class BookDetailView(DetailView):
     model = BookItem
