@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 from django.views.generic import TemplateView
 from .models import BookItem, Author, Publisher, Review
 from django.views.generic import (ListView,DetailView,CreateView,UpdateView,DeleteView)
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .forms import BookItemForm, AuthorForm, PublisherForm, ReviewForm
 from django.db.models import Q, Avg
 from django.shortcuts import render, redirect, get_object_or_404
@@ -42,12 +42,15 @@ class BookListView(ListView):
             
         if publisher:
             queryset = queryset.filter(Publisher_id=publisher)
-        
-        if ratings:
-            queryset = queryset.filter(avg_rating__gte=min(ratings))
             
         if author:
             queryset = queryset.filter(Author_id=author)
+            
+        if ratings:
+            queryset = queryset.annotate(avg_rating=Avg("reviews__Bewertung")).filter(avg_rating__gte=int(ratings))
+
+
+        
         
         return queryset.distinct()
     
@@ -182,18 +185,7 @@ class ReviewDeleteView(DeleteView):
 # -------------
 # Suchleiste
 
-def book_list(request):
-    query = request.GET.get("q")
-    print("QUERY:", query)
-    books = BookItem.objects.all()
-    
-    if query:
-        books = books.filter(Titel__icontains=query)
-        
-    return render(request, "library/book/book_list.html", {
-                  "all_items": books,
-                  "query": query,
-                  })
+
 # -------------
 # Favoritenliste
 
@@ -220,7 +212,7 @@ def favorites_add(request):
 def favorites_remove(request, pk):
     # pk ist Buch-ID
     FavoriteEntry.objects.filter(Buch_id=pk).delete()
-    return redirect(request.META.get("HTTP_REFERER", "favorites_list"))
+    return redirect(request.META.get("HTTP_REFERER", reverse("favorites_list")))
 
 
 def favorites_toggle(request, pk):
