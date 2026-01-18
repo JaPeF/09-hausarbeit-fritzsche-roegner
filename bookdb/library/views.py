@@ -136,7 +136,7 @@ class ReviewListView(ListView):
 
 class ReviewDetailView(DetailView):
     model = Review
-    template_name = "library/generic_detail.html"
+    template_name = "library/reviews/review_detail.html"
     context_object_name = "review"
 
 class ReviewCreateView(CreateView):

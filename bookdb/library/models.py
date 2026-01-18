@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Author(models.Model):
@@ -34,9 +35,9 @@ class BookItem(models.Model):
 class Review(models.Model):
     Buch = models.ForeignKey(BookItem, on_delete=models.CASCADE, related_name="reviews")
     Rezensent = models.CharField(max_length=100)
-    Bewertung = models.PositiveSmallIntegerField()
+    Bewertung = models.PositiveSmallIntegerField(validators=[MinValueValidator(1),MaxValueValidator(10)])
     Kommentar = models.TextField(blank=True)
     Datum = models.DateField(default=date.today)
 
     def __str__(self):
-        return f"{self.book} - {self.rating}/5"
+        return f"{self.Buch} - {self.Bewertung}/10"

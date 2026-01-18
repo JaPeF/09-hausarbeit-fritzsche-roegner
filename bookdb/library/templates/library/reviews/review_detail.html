@@ -1,0 +1,25 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+  <h1>Rezension</h1>
+
+  <p>
+    <strong>Buch:</strong>
+    <a href="{% url 'book_detail' review.Buch.pk %}">{{ review.Buch.Titel }}</a>
+  </p>
+
+  <p>
+    <strong>Rezensent:</strong> {{ review.Rezensent }}<br>
+    <strong>Bewertung:</strong> {{ review.Bewertung }} / 10<br>
+    <strong>Datum:</strong> {{ review.Datum }}
+  </p>
+
+  <h2>Kommentar</h2>
+  <p>{{ review.Kommentar }}</p>
+
+  <p>
+    <a href="{% url 'review_update' review.pk %}">Bearbeiten</a> |
+    <a href="{% url 'review_delete' review.pk %}">Löschen</a> |
+    <a href="{% url 'review_list' %}">Zurück zur Liste</a>
+  </p>
+{% endblock %}

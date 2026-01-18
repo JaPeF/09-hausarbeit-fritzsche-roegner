@@ -8,7 +8,6 @@
     <a href="{% url 'author_create' %}">Hinzufügen</a>
   </p>
   <ul>
-  <ul>
     {% for author in author %}
       <li>
         <a href="{% url 'author_detail' author.pk %}">{{ author.Vorname }} {{ author.Nachname }}</a>

@@ -3,4 +3,19 @@
 {% block content %}
     <h1>Willkommen zu den Rezensionen</h1>
   <p>Hier kann man Rezensionen zu Büchern finden</p>
+    <p>
+    Hier kannst du eine Rezension zu einem Buch verfassen:
+    <a href="{% url 'review_create' %}">Erstellen</a>
+  </p>
+  <ul>
+    {% for review in reviews %}
+      <li>
+        <a href="{% url 'review_detail' review.pk %}">{{ review.Buch.Titel }} - {{ review.Rezensent }}</a>
+        - <a href="{% url 'review_update' review.pk %}">Bearbeiten</a>
+        - <a href="{% url 'review_delete' review.pk %}">Löschen</a>
+      </li>
+    {% empty %}
+      <li>Es gibt noch keine Rezensionen.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
