@@ -4,6 +4,8 @@ from . import views
 urlpatterns = [
     # Home
     path("", views.home, name="home"),
+    # Falscher Link
+    path("", views.home, name="home"),
     # Books
     path("books/", views.BookListView.as_view(), name="book_list"),
     path("books/new/", views.BookCreateView.as_view(), name="book_create"),
